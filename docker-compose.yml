@@ -5,6 +5,15 @@ services:
     image: jwilder/nginx-proxy
     volumes:
       - /var/run/docker.sock:/tmp/docker.sock:ro
+    ports:
+      - 8080:80
+
+  aplicacao-1:
+    image: nginx
+    environment:
+        - VIRTUAL_HOST=aplicacao-1.local
+    ports:
+        - 8082:80
   mysql:
     image: mysql:5.7
     container_name: "mysql"
