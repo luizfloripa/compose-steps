@@ -1,0 +1,21 @@
+version: "3.7"
+
+services:
+  proxy:
+    image: jwilder/nginx-proxy
+    volumes:
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+  mysql:
+    image: mysql:5.7
+    container_name: "mysql"
+    volumes:
+        - "db_data_local:/var/lib/mysql"
+        - "./mysql/initial_data:/docker-entrypoint-initdb.d"
+        - "./mysql/my.cnf:/etc/mysql/my.cnf"
+    ports:
+        - "3306:3306"
+    environment:
+        - MYSQL_ROOT_PASSWORD=mysqlpass
+    command: mysqld --sql_mode=""
+volumes:
+    db_data_local:
